@@ -38,6 +38,9 @@ const itemAttendanceSchema = new mongoose.Schema({
 		min: 1,
 		max: 5,
 	},
+	joinLink: {
+		type: String,
+	},
 })
 itemAttendanceSchema.plugin(mongooseLeanGetter)
 

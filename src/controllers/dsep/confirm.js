@@ -70,6 +70,7 @@ exports.confirm = async (req, res) => {
 			userMongoId: userId,
 			itemMongoId: item._id,
 			orderId: fulfillment.orderId,
+			joinLink: fulfillment.joinLink,
 			type: type === 'mentor' ? 'mentor' : 'session',
 		})
 	} catch (err) {

@@ -14,6 +14,7 @@ exports.getConfirmedList = async (req, res) => {
 					type: itemAttendance.type,
 					details: JSON.parse(item.details),
 					status: itemAttendance.status,
+					joinLink: itemAttendance.joinLink,
 				}
 			})
 		)
