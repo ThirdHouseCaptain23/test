@@ -1,6 +1,7 @@
 'use strict'
 
 const { cacheSave, cacheGet } = require('@utils/redis')
+const { internalRequests } = require('@helpers/requests')
 
 const categoriesFlattener = (categories) => {
 	return categories.map((category) => {
@@ -91,6 +92,14 @@ const catalogHandler = async (providers, transactionId, bppMongoId) => {
 					delete session.fulfillment.customer
 				}
 				await cacheSave(`SESSION:${itemId}`, session)
+				const response = await internalRequests.recommendationPOST({
+					route: process.env.RECOMMENDATION_ADD_ITEM,
+					body: {
+						payload: session,
+					},
+				})
+				console.log(response)
+				if (!response.status) throw 'Neo4j Item Injection Failed'
 				console.log('BPP MONGO ID:', bppMongoId)
 				await cacheSave(`SESSION:BPP_ID:${itemId}`, bppMongoId)
 				const sessionsList = await cacheGet(`SESSION_LIST:${transactionId}`)

@@ -3,6 +3,7 @@
 const { userQueries } = require('@database/storage/user/queries')
 const { profileQueries } = require('@database/storage/profile/queries')
 const authentication = require('@utils/authentication')
+const { internalRequests } = require('@helpers/requests')
 
 exports.login = async (req, res) => {
 	const errorResponse = () => res.status(401).json({ status: false, message: 'Authentication Failure' })
@@ -64,17 +65,27 @@ exports.addProfile = async (req, res) => {
 	const failedRes = () => res.status(400).json({ status: false, message: 'Profile Creation Failed' })
 	try {
 		const userId = req.user.id
+		const user = await userQueries.findById(userId)
+		const email = user.email
 		const name = req.body.name
 		const phone = req.body.phone
 		const newProfile = await profileQueries.updateOrCreateOne(userId, { name, phone })
 		if (!newProfile) return failedRes()
-		else {
-			res.status(200).json({
-				status: true,
-				message: 'Profile Created Successfully',
-				data: newProfile,
-			})
-		}
+		const response = await internalRequests.recommendationPOST({
+			route: process.env.RECOMMENDATION_ADD_USER,
+			body: {
+				userId,
+				email,
+				phone,
+				name,
+			},
+		})
+		if (!response.status) return failedRes()
+		res.status(200).json({
+			status: true,
+			message: 'Profile Created Successfully',
+			data: newProfile,
+		})
 	} catch (err) {
 		console.log(err)
 		failedRes()
