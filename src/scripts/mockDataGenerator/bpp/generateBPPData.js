@@ -111,7 +111,7 @@ const generateBPPData = async () => {
 		let mentor = null
 
 		for (let i = 1; i <= 200; i++) {
-			console.log('I: ', i)
+			/* console.log('I: ', i)
 			console.log('ORGANIZATION INDEX VALUE: ', organizationNameIndex)
 			console.log()
 			console.log('ORGANIZATION: ', {
@@ -122,7 +122,7 @@ const generateBPPData = async () => {
 
 			console.log('MENTOR INDEX VALUE: ', mentorNameIndex)
 			console.log('MENTOR: ', {
-				name: mentorName[mentorNameIndex].replace(/[^a-zA-Z]+/g, ''),
+				name: mentorName[mentorNameIndex].replace(/[^a-zA-Z\s ]+/g, ''),
 				email:
 					mentorName[mentorNameIndex].toLowerCase().replace(/[^a-zA-Z]+/g, '') +
 					`@${organizations[organizationNameIndex].toLowerCase()}.com`,
@@ -131,7 +131,7 @@ const generateBPPData = async () => {
 				secretCode: '4567',
 				otp: '319044',
 				//organisationId: organisation.id,
-			})
+			}) */
 
 			let category = {
 				value: categoryNames[categoryNameIndex],
@@ -175,9 +175,10 @@ const generateBPPData = async () => {
 				timeSlotIndex = 0
 				++mentorNameIndex
 				mentor = await generateMentorAccount({
-					name: mentorName[mentorNameIndex].replace(/[^a-zA-Z\s]+/g, ''),
+					name: mentorName[mentorNameIndex].replace(/[^a-zA-Z\s ]+/g, ''),
 					email:
-						mentorName[mentorNameIndex].toLowerCase().replace(/[^a-zA-Z]+/g, '') + '@shikshalokamblah.org',
+						mentorName[mentorNameIndex].toLowerCase().replace(/[^a-zA-Z]+/g, '') +
+						`@${organizations[organizationNameIndex].toLowerCase()}.com`,
 					password: 'hackathonpassword',
 					isAMentor: true,
 					secretCode: '4567',
