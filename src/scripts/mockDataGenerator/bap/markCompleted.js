@@ -9,7 +9,7 @@ const config = {
 	},
 }
 
-exports.confirmSession = async (authToken, data) => {
+exports.markCompleted = async (authToken, data) => {
 	try {
 		config.headers['Authorization'] = 'Bearer ' + authToken
 		config.url = 'http://localhost:3015/osl-bap/mark-attendance-completed'
