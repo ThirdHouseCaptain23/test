@@ -13,12 +13,14 @@ const config = {
 exports.generateMentorAccount = async (data) => {
 	try {
 		config.url = 'https://dev.elevate-apis.shikshalokam.org/dsep-user/v1/account/create'
+		config.headers['Content-Type'] = 'application/json'
 		config.data = JSON.stringify(data)
-		console.log(config)
+		//console.log(config)
 		const response = await axios(config)
-		console.log(response.data.result)
+		//console.log(response.data.result)
+		return response.data.result
 	} catch (err) {
-		console.log(err)
+		console.log(JSON.stringify(err, null, 4))
 	}
 }
 
@@ -27,7 +29,7 @@ exports.loginMentorAccount = async (data) => {
 		config.url = 'https://dev.elevate-apis.shikshalokam.org/dsep-user/v1/account/login'
 		config.data = qs.stringify(data)
 		config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-		console.log(config)
+		//console.log(config)
 		const response = await axios(config)
 		return response.data.result
 	} catch (err) {

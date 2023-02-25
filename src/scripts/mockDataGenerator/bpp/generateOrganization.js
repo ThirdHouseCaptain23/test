@@ -16,7 +16,8 @@ exports.generateOrganization = async (authToken, data) => {
 		config.data = JSON.stringify(data)
 		console.log(config)
 		const response = await axios(config)
-		console.log(response.data.result)
+		//console.log(response.data.result)
+		return response.data.result
 	} catch (err) {
 		console.log(err)
 	}
