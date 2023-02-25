@@ -34,7 +34,7 @@ function sleep(ms) {
 
 const generateBAPData = async () => {
 	try {
-		for (let i = 1; i <= 1; i++) {
+		for (let i = 3; i <= 10; i++) {
 			console.log('I: ', i)
 			const sessions = await getSessions({
 				sessionTitle: 'ClusterNumber' + i,
