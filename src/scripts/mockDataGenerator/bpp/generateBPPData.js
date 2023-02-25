@@ -111,6 +111,7 @@ const generateBPPData = async () => {
 		let mentor = null
 
 		for (let i = 1; i <= 200; i++) {
+			console.log('i: ', i)
 			/* console.log('I: ', i)
 			console.log('ORGANIZATION INDEX VALUE: ', organizationNameIndex)
 			console.log()

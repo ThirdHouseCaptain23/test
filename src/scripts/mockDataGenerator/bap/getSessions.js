@@ -16,7 +16,7 @@ exports.getSessions = async (data) => {
 		console.log(config)
 		const response = await axios(config)
 		console.log(response.data.data)
-		return response.data.data
+		return response.data.data.sessions
 	} catch (err) {
 		console.log(err)
 	}
