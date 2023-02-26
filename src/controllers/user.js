@@ -122,7 +122,7 @@ exports.getUserEmails = async (req, res) => {
 		})
 		res.status(200).json({
 			status: true,
-			message: 'Request Failed',
+			message: 'Request Success',
 			data: response.data,
 		})
 	} catch (err) {
