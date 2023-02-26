@@ -8,7 +8,7 @@ const { faker } = require('@faker-js/faker')
 
 const getRandomNumber = (min, max) => Math.floor(Math.random() * max) + min
 
-const shuffleArray = (array) => {
+const shuffleArray = async (array) => {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1))
 		;[array[i], array[j]] = [array[j], array[i]]
@@ -16,7 +16,7 @@ const shuffleArray = (array) => {
 	return array
 }
 
-const generateUserNames = (count) => {
+const generateUserNames = async (count) => {
 	try {
 		const mentorSet = new Set()
 		do {
@@ -34,20 +34,20 @@ function sleep(ms) {
 
 const generateBAPData = async () => {
 	try {
-		for (let i = 3; i <= 10; i++) {
+		for (let i = 1; i <= 10; i++) {
 			console.log('I: ', i)
 			const sessions = await getSessions({
 				sessionTitle: 'ClusterNumber' + i,
 				type: 'session',
 			})
 
-			const userCountForCluster = 5 //getRandomNumber(15, 30)
-			const userNames = generateUserNames(userCountForCluster)
+			const userCountForCluster = 10 //getRandomNumber(15, 30)
+			const userNames = await generateUserNames(userCountForCluster)
 
 			for (let j = 0; j < userCountForCluster; j++) {
 				const enrollmentCountForThisUser = 5 //getRandomNumber(5, 10)
 				const user = await signup({
-					email: userNames[j].toLowerCase().replace(/[^a-zA-Z]+/g, '') + '@shikshalokam.org',
+					email: userNames[j].toLowerCase().replace(/[^a-zA-Z]+/g, '') + i + '@shikshalokam.org',
 					password: 'password',
 				})
 				const accessToken = user.accessToken
@@ -55,7 +55,7 @@ const generateBAPData = async () => {
 					name: userNames[j],
 					phone: '9895000000',
 				})
-				const shuffledSessions = shuffleArray(sessions)
+				const shuffledSessions = await shuffleArray(sessions)
 				for (let k = 0; k < enrollmentCountForThisUser; k++) {
 					const session = shuffledSessions[k]
 					const itemId = session.item.id
