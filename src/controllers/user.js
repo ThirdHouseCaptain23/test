@@ -113,3 +113,20 @@ exports.addProfile = async (req, res) => {
 	}
 }
  */
+
+exports.getUserEmails = async (req, res) => {
+	const failedRes = () => res.status(400).json({ status: false, message: 'Profile Creation Failed' })
+	try {
+		const response = await internalRequests.recommendationPOST({
+			route: process.env.RECOMMENDATION_GET_USER_EMAILS,
+		})
+		res.status(200).json({
+			status: true,
+			message: 'Request Failed',
+			data: response.data,
+		})
+	} catch (err) {
+		console.log(err)
+		failedRes()
+	}
+}

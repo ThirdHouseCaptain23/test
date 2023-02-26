@@ -2,6 +2,7 @@
 
 const { cacheSave, cacheGet } = require('@utils/redis')
 const { internalRequests } = require('@helpers/requests')
+const { itemQueries } = require('@database/storage/item/queries')
 
 const categoriesFlattener = (categories) => {
 	return categories.map((category) => {
@@ -97,6 +98,10 @@ const catalogHandler = async (providers, transactionId, bppMongoId) => {
 					body: {
 						payload: session,
 					},
+				})
+				const { storedItem } = await itemQueries.findOrCreate({
+					where: { itemId },
+					defaults: { details: JSON.stringify(session), bppMongoId },
 				})
 				console.log(response)
 				if (!response.status) throw 'Neo4j Item Injection Failed'
